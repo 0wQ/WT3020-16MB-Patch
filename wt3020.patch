@@ -1,0 +1,55 @@
+From b00101e7a52d6499a0edd48f1e8cb2522a4eaa8c Mon Sep 17 00:00:00 2001
+From: Mizore <me@mizore.cn>
+Date: Sat, 23 Mar 2019 10:28:26 +0000
+Subject: [PATCH] fix image size for 16M version : 4M -> 16M
+
+---
+ package/kernel/mac80211/files/lib/wifi/mac80211.sh | 4 ++--
+ target/linux/ramips/dts/WT3020-4M.dts              | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/package/kernel/mac80211/files/lib/wifi/mac80211.sh b/package/kernel/mac80211/files/lib/wifi/mac80211.sh
+index 511a9188db..6b7afadedf 100644
+--- a/package/kernel/mac80211/files/lib/wifi/mac80211.sh
++++ b/package/kernel/mac80211/files/lib/wifi/mac80211.sh
+@@ -113,13 +113,13 @@ detect_mac80211() {
+ 			set wireless.radio${devidx}.hwmode=11${mode_band}
+ 			${dev_id}
+ 			${ht_capab}
+-			set wireless.radio${devidx}.disabled=1
++			set wireless.radio${devidx}.disabled=0
+ 
+ 			set wireless.default_radio${devidx}=wifi-iface
+ 			set wireless.default_radio${devidx}.device=radio${devidx}
+ 			set wireless.default_radio${devidx}.network=lan
+ 			set wireless.default_radio${devidx}.mode=ap
+-			set wireless.default_radio${devidx}.ssid=OpenWrt
++			set wireless.default_radio${devidx}.ssid=OpenWrt_NEXX
+ 			set wireless.default_radio${devidx}.encryption=none
+ EOF
+ 		uci -q commit wireless
+diff --git a/target/linux/ramips/dts/WT3020-4M.dts b/target/linux/ramips/dts/WT3020-4M.dts
+index 4bdc3bd6ba..2c2b092539 100644
+--- a/target/linux/ramips/dts/WT3020-4M.dts
++++ b/target/linux/ramips/dts/WT3020-4M.dts
+@@ -4,7 +4,7 @@
+ 
+ / {
+ 	compatible = "nexx,wt3020-4m", "nexx,wt3020", "ralink,mt7620n-soc";
+-	model = "Nexx WT3020 (4M)";
++	model = "Nexx WT3020 (16M)";
+ };
+ 
+ &spi0 {
+@@ -41,7 +41,7 @@
+ 			partition@50000 {
+ 				compatible = "denx,uimage";
+ 				label = "firmware";
+-				reg = <0x50000 0x3b0000>;
++				reg = <0x50000 0xfb0000>;
+ 			};
+ 		};
+ 	};
+-- 
+2.14.1
+
