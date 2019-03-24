@@ -28,7 +28,7 @@ index 093303892c..d209423ca7 100755
  		;;
 diff --git a/target/linux/ramips/dts/WT3020-16M.dts b/target/linux/ramips/dts/WT3020-16M.dts
 new file mode 100644
-index 0000000000..41181035f8
+index 0000000000..6d265c22b8
 --- /dev/null
 +++ b/target/linux/ramips/dts/WT3020-16M.dts
 @@ -0,0 +1,56 @@
@@ -83,7 +83,7 @@ index 0000000000..41181035f8
 +			partition@50000 {
 +				compatible = "denx,uimage";
 +				label = "firmware";
-+				reg = <0x50000 0x7b0000>;
++				reg = <0x50000 0xfb0000>;
 +			};
 +		};
 +	};
@@ -111,10 +111,20 @@ index da90568df0..e60a829800 100644
    DTS := Y1
    IMAGE_SIZE := $(ralink_default_fw_size_16M)
 diff --git a/tools/firmware-utils/src/mkporayfw.c b/tools/firmware-utils/src/mkporayfw.c
-index 6ec4f320d9..2de622549f 100644
+index 6ec4f320d9..6453d3c76d 100644
 --- a/tools/firmware-utils/src/mkporayfw.c
 +++ b/tools/firmware-utils/src/mkporayfw.c
-@@ -232,6 +232,12 @@ static struct board_info boards[] = {
+@@ -135,6 +135,9 @@ static struct flash_layout layouts[] = {
+ 	}, {
+ 		.id		= "8M",
+ 		.fw_max_len	= 0x7c0000,
++	}, {
++		.id		= "16M",
++		.fw_max_len	= 0xfc0000,
+ 	}, {
+ 		/* terminating entry */
+ 	}
+@@ -232,6 +235,12 @@ static struct board_info boards[] = {
                  .layout_id      = "8M",
                  .key            = KEY_NEXX_2,
          }, {
